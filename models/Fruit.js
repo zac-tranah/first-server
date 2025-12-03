@@ -25,23 +25,30 @@ class Fruit {
 
   static create = (data) => {
     const newFruit = data;
-    newFruit["id"] = fruits.length + 1;
-    fruits.push(newFruit);
-    return new Fruit(newFruit);
+    const updatedFruit = fruits.find(
+      (fruit) => fruit.name.toLowerCase() == newFruit.data.toLowerCase()
+    );
+    if (!updatedFruit) {
+      newFruit["id"] = fruits.length + 1;
+      fruits.push(newFruit);
+      return new Fruit(newFruit);
+    } else {
+      throw Error("Fruit already exists");
+    }
   };
 
   update(data) {
     const updatedFruit = fruits.find(
       (fruit) => fruit.name.toLowerCase() == this.name.toLowerCase()
     );
-    
+
     if (updatedFruit) {
       updatedFruit.name = data.name;
       return new Fruit(updatedFruit);
     } else {
       throw new Error("Fruit not found");
     }
-  };
+  }
 
   destroy() {
     // Find the index of the fruit in the underlying array
